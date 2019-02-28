@@ -16,6 +16,7 @@ namespace Calculator
     {
         private Calculator _calculator = new Calculator();
         private Calculator.Operations currentOperations;
+        private bool _equalsWasClicked = false;
 
         public Form1()
         {
@@ -70,13 +71,12 @@ namespace Calculator
             }
         }
 
-
         private void equals_Click(object sender, EventArgs e)
         {
             _calculator.EnterNumber(float.Parse(textBox1.Text));
-            textBox1.Text = "";
-            textBox2.Text = "";
-            history.Text += "=";
+            //textBox1.Text = "";
+            //textBox2.Text = "";
+            _equalsWasClicked = true;
 
             var status = _calculator.Calculate(this.currentOperations);
 
@@ -93,7 +93,8 @@ namespace Calculator
                 {
                     var result = _calculator.LastResult();
                     textBox1.Text = result.ToString();
-                    history.Text = result.ToString();
+                    history.Text += textBox2.Text + "=\n";
+                    history.Text += textBox1.Text + "\n";
                 }
                 break;
             }
@@ -104,8 +105,6 @@ namespace Calculator
         {
             textBox1.Text += (sender as Button).Text;
             textBox2.Text += (sender as Button).Text;
-            history.Text += (sender as Button).Text;
-            // if operator a is clicked then print to textbox2
         }
 
         private void squareRoot_Click(object sender, EventArgs e)
@@ -178,7 +177,6 @@ namespace Calculator
         {
             this.textBox1.Text += ".";
             this.textBox2.Text += ".";
-            this.history.Text += ".";
         }
 
         private void CE_Click(object sender, EventArgs e)
@@ -192,7 +190,8 @@ namespace Calculator
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Add;
             textBox2.Text += "+";
-            history.Text += "+";
+
+            _equalsWasClicked = false;
         }
 
         private void divide_Click(object sender, EventArgs e)
@@ -200,8 +199,6 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Divide;
-            textBox2.Text += "/";
-            history.Text += "/";
         }
 
         private void multiply_Click(object sender, EventArgs e)
@@ -209,7 +206,6 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Multiply;
-            textBox2.Text += "x";
         }
 
         private void subtract_Click(object sender, EventArgs e)
@@ -217,7 +213,6 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Subtract;
-            textBox2.Text += "-";
         }
 
         private void modulus_Click(object sender, EventArgs e)

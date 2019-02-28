@@ -97,7 +97,6 @@ namespace Calculator
                 }
                 break;
 
-
                 case Operations.Add:
                 {
                     var op1 = _stack.Pop();
