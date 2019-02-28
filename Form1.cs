@@ -46,14 +46,16 @@ namespace Calculator
         // if you type 1 and then press the negative button it will say it is not allowed
         private void plusMinus_Click(object sender, EventArgs e)
         {
-            _calculator.EnterNumber(float.Parse(textBox1.Text));
-            textBox1.Text = "-";
-            currentOperations = Calculator.Operations.PlusMinus;
-            textBox2.Text += "-";
-
-            var status = _calculator.Calculate(this.currentOperations);
-
-
+            if (textBox1.Text.StartsWith("-"))
+            {
+                // It's negative now, so strip the '-' sign to make it positive
+                textBox1.Text = textBox1.Text.Substring(1);
+            }
+            else if (!string.IsNullOrEmpty(textBox1.Text) && decimal.Parse(textBox1.Text) != 0)
+            {
+                // It's negative now so prefix the value with the '-' sign to make it negative
+                textBox1.Text = "-" + textBox1.Text;
+            }
         }
 
         private void equals_Click(object sender, EventArgs e)
@@ -85,7 +87,7 @@ namespace Calculator
         void OnButtonClick(object sender, EventArgs e)
         {
             textBox1.Text += (sender as Button).Text;
-            textBox2.Text += (sender as Button).Text;
+            // if operator a  is clicked then print to textbox2
         }
 
         private void squareRoot_Click(object sender, EventArgs e)
