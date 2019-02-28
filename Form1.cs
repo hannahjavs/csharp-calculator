@@ -23,6 +23,7 @@ namespace Calculator
             _calculator.EnterNumber(0);
             textBox1.Text = "";
             textBox2.Text = "";
+            history.Text = "";
 
             zero.Click += OnButtonClick;
             one.Click += OnButtonClick;
@@ -63,6 +64,8 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             textBox2.Text = "";
+            history.Text += (sender as Button).Text;
+
             var status = _calculator.Calculate(this.currentOperations);
 
             switch (status)
