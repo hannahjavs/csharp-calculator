@@ -87,6 +87,7 @@ namespace Calculator
         void OnButtonClick(object sender, EventArgs e)
         {
             textBox1.Text += (sender as Button).Text;
+            textBox2.Text += (sender as Button).Text;
             // if operator a  is clicked then print to textbox2
         }
 
@@ -129,6 +130,7 @@ namespace Calculator
                 textBox1.Text = result.ToString();
             }
         }
+
         private void clear_Click(object sender, EventArgs e)
         {
             if (textBox1.Text == "")
@@ -136,7 +138,11 @@ namespace Calculator
                 MessageBox.Show("Cannot clear empty space!");
                 return;
             }
-
+            if (textBox2.Text == "")
+            {
+                MessageBox.Show("Cannot clear empty space!");
+                return;
+            }
             else
             {
                 _calculator.EnterNumber(float.Parse(textBox1.Text));
