@@ -35,8 +35,6 @@ namespace Calculator
             seven.Click += OnButtonClick;
             eight.Click += OnButtonClick;
             nine.Click += OnButtonClick;
-
-            //statusOk = (_calculator.Calculate(this.currentOperations) == Calculator.Status.Ok)
         }
 
         private void Form1_Load(object sender, EventArgs e){}
@@ -59,12 +57,26 @@ namespace Calculator
             }
         }
 
+        private void fraction_Click(object sender, EventArgs e)
+        {
+            _calculator.EnterNumber(float.Parse(textBox1.Text));
+            textBox1.Text = "";
+            currentOperations = Calculator.Operations.Fraction;
+
+            if (_calculator.Calculate(this.currentOperations) == Calculator.Status.Ok)
+            {
+                var result = _calculator.LastResult();
+                textBox1.Text = result.ToString();
+            }
+        }
+
+
         private void equals_Click(object sender, EventArgs e)
         {
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             textBox2.Text = "";
-            history.Text += (sender as Button).Text;
+            history.Text += "=";
 
             var status = _calculator.Calculate(this.currentOperations);
 
@@ -81,6 +93,7 @@ namespace Calculator
                 {
                     var result = _calculator.LastResult();
                     textBox1.Text = result.ToString();
+                    history.Text = result.ToString();
                 }
                 break;
             }
@@ -91,7 +104,8 @@ namespace Calculator
         {
             textBox1.Text += (sender as Button).Text;
             textBox2.Text += (sender as Button).Text;
-            // if operator a  is clicked then print to textbox2
+            history.Text += (sender as Button).Text;
+            // if operator a is clicked then print to textbox2
         }
 
         private void squareRoot_Click(object sender, EventArgs e)
@@ -109,7 +123,6 @@ namespace Calculator
 
         private void squared_Click(object sender, EventArgs e)
         {
-
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Squared;
@@ -165,6 +178,7 @@ namespace Calculator
         {
             this.textBox1.Text += ".";
             this.textBox2.Text += ".";
+            this.history.Text += ".";
         }
 
         private void CE_Click(object sender, EventArgs e)
@@ -178,6 +192,7 @@ namespace Calculator
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Add;
             textBox2.Text += "+";
+            history.Text += "+";
         }
 
         private void divide_Click(object sender, EventArgs e)
@@ -186,6 +201,7 @@ namespace Calculator
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Divide;
             textBox2.Text += "/";
+            history.Text += "/";
         }
 
         private void multiply_Click(object sender, EventArgs e)
@@ -204,15 +220,8 @@ namespace Calculator
             textBox2.Text += "-";
         }
 
-        private void fraction_Click(object sender, EventArgs e)
-        {
-        // If you type 4 then press this button it will make it 0.25
-        }
-
         private void modulus_Click(object sender, EventArgs e)
         {
-
         }
-
     }
 }

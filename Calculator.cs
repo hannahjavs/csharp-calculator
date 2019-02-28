@@ -25,7 +25,8 @@ namespace Calculator
             SquareRoot,
             Squared,
             PowerOf3,
-            PlusMinus
+            PlusMinus,
+            Fraction
         }
 
         public enum Status
@@ -61,6 +62,14 @@ namespace Calculator
                     var op2 = _stack.Pop();
                     op1 *= -1;
                     op2 *= -1;
+                }
+                break;
+
+                case Operations.Fraction:
+                {
+                    var op1 = _stack.Pop();
+                    op1 = (float)((double)1 / op1);
+                    _stack.Push(op1);
                 }
                 break;
 
