@@ -74,9 +74,9 @@ namespace Calculator
         private void equals_Click(object sender, EventArgs e)
         {
             _calculator.EnterNumber(float.Parse(textBox1.Text));
-            //textBox1.Text = "";
-            //textBox2.Text = "";
             _equalsWasClicked = true;
+
+            // if no string do not do anything catch errors
 
             var status = _calculator.Calculate(this.currentOperations);
 
@@ -148,12 +148,7 @@ namespace Calculator
 
         private void clear_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "")
-            {
-                MessageBox.Show("Cannot clear empty space!");
-                return;
-            }
-            if (textBox2.Text == "")
+            if (textBox1.Text == "" && textBox2.Text == "")
             {
                 MessageBox.Show("Cannot clear empty space!");
                 return;
@@ -162,6 +157,7 @@ namespace Calculator
             {
                 _calculator.EnterNumber(float.Parse(textBox1.Text));
                 textBox1.Text = "";
+                textBox2.Text = "";
             }
         }
 
@@ -181,7 +177,16 @@ namespace Calculator
 
         private void CE_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            if (textBox1.Text == "" && textBox2.Text == "")
+            {
+                MessageBox.Show("Cannot clear empty space!");
+                return;
+            }
+            else
+            {
+                textBox1.Text = "";
+                textBox2.Text = "";
+            }
         }
 
         private void add_Click(object sender, EventArgs e)
@@ -199,6 +204,8 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Divide;
+
+            _equalsWasClicked = false;
         }
 
         private void multiply_Click(object sender, EventArgs e)
@@ -206,6 +213,8 @@ namespace Calculator
             _calculator.EnterNumber(float.Parse(textBox1.Text));
             textBox1.Text = "";
             currentOperations = Calculator.Operations.Multiply;
+
+
         }
 
         private void subtract_Click(object sender, EventArgs e)
